@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  smartcondo-db:
+    image: postgres:17
+    container_name: postgre-smartcondo
+    restart: always
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: 123456
+        POSTGRES_DB: smartcondo_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+
+
