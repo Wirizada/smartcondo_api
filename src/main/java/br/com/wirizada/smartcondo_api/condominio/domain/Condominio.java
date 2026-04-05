@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Entity
+@Entity(name= "condominios")
 @Table(name= "condominios")
 @Getter
 @Setter

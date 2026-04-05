@@ -7,7 +7,7 @@ import org.hibernate.annotations.TenantId;
 
 import java.util.UUID;
 
-@Entity
+@Entity(name= "usuarios")
 @Table(name= "usuarios")
 @Getter
 @Setter

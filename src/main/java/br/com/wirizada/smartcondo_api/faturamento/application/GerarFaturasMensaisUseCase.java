@@ -25,7 +25,7 @@ public class GerarFaturasMensaisUseCase {
     }
 
     @Transactional
-    public void executar(BigDecimal valorBase, LocalDate dataVencimento){
+    public void gerarFaturas(BigDecimal valorBase, LocalDate dataVencimento){
 
         List<Apartamento> apartamentos = apartamentoRepository.findAll();
         List<Fatura> novasFaturas = new ArrayList<>();
