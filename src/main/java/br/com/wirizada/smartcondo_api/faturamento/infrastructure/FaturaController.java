@@ -2,8 +2,8 @@ package br.com.wirizada.smartcondo_api.faturamento.infrastructure;
 
 import br.com.wirizada.smartcondo_api.faturamento.application.GerarFaturaMensalUseCase;
 import br.com.wirizada.smartcondo_api.faturamento.application.ListarFaturaUseCase;
+import br.com.wirizada.smartcondo_api.faturamento.application.gateways.FaturaDTO;
 import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.GerarFaturasRequest;
-import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.FaturaProjection;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +31,8 @@ public class FaturaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FaturaProjection>> listarFaturas() {
-        List<FaturaProjection> faturas = listarFaturasUseCase.executar();
+    public ResponseEntity<List<FaturaDTO>> listarFaturas() {
+        List<FaturaDTO> faturas = listarFaturasUseCase.executar();
         return ResponseEntity.status(HttpStatus.OK).body(faturas);
     }
 }
