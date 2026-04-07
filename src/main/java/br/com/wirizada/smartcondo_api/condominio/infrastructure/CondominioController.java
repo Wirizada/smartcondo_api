@@ -24,7 +24,7 @@ public class CondominioController {
 
     @PostMapping
     public ResponseEntity<CondominioResponse> cadastrar(@RequestBody @Valid CadastrarCondominioRequest request) {
-        Condominio condominio = cadastrarCondominioUseCase.registrarCondominio(request.nome(), request.cnpj());
+        Condominio condominio = cadastrarCondominioUseCase.executar(request.nome(), request.cnpj());
 
         CondominioResponse response = new CondominioResponse(
                 condominio.getId(),

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public interface ListarFaturaProjection {
+public interface FaturaProjection {
     UUID getId();
     BigDecimal getValor();
     LocalDate getDataVencimento();

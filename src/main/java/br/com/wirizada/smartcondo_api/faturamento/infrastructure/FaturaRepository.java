@@ -1,7 +1,7 @@
 package br.com.wirizada.smartcondo_api.faturamento.infrastructure;
 
 import br.com.wirizada.smartcondo_api.faturamento.domain.Fatura;
-import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.ListarFaturaProjection;
+import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.FaturaProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,5 +22,5 @@ public interface FaturaRepository extends JpaRepository<Fatura, UUID> {
         INNER JOIN tb_apartamentos a ON f.apartamento_id = a.id
         WHERE f.condominio_id = :tenantId
     """, nativeQuery = true)
-    List<ListarFaturaProjection> listarFaturasPorCondominio(@Param("tenantId") UUID tenantId);
+    List<FaturaProjection> listarFaturasPorCondominio(@Param("tenantId") UUID tenantId);
 }

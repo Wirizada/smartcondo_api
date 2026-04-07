@@ -1,9 +1,9 @@
 package br.com.wirizada.smartcondo_api.faturamento.infrastructure;
 
-import br.com.wirizada.smartcondo_api.faturamento.application.GerarFaturasMensaisUseCase;
-import br.com.wirizada.smartcondo_api.faturamento.application.ListarFaturasUseCase;
+import br.com.wirizada.smartcondo_api.faturamento.application.GerarFaturaMensalUseCase;
+import br.com.wirizada.smartcondo_api.faturamento.application.ListarFaturaUseCase;
 import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.GerarFaturasRequest;
-import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.ListarFaturaProjection;
+import br.com.wirizada.smartcondo_api.faturamento.infrastructure.dto.FaturaProjection;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,24 +15,24 @@ import java.util.List;
 @RequestMapping("/api/faturas")
 public class FaturaController {
 
-    private final GerarFaturasMensaisUseCase gerarFaturasMensaisUseCase;
-    private final ListarFaturasUseCase listarFaturasUseCase;
+    private final GerarFaturaMensalUseCase gerarFaturasMensaisUseCase;
+    private final ListarFaturaUseCase listarFaturasUseCase;
 
-    public FaturaController(GerarFaturasMensaisUseCase gerarFaturasMensaisUseCase
-            , ListarFaturasUseCase listarFaturasUseCase) {
+    public FaturaController(GerarFaturaMensalUseCase gerarFaturasMensaisUseCase
+            , ListarFaturaUseCase listarFaturasUseCase) {
         this.gerarFaturasMensaisUseCase = gerarFaturasMensaisUseCase;
         this.listarFaturasUseCase = listarFaturasUseCase;
     }
 
     @PostMapping
     public ResponseEntity<String> gerarFaturas(@RequestBody @Valid GerarFaturasRequest request) {
-        gerarFaturasMensaisUseCase.gerarFaturas(request.valorBase(), request.dataVencimento());
+        gerarFaturasMensaisUseCase.executar(request.valorBase(), request.dataVencimento());
         return ResponseEntity.status(HttpStatus.CREATED).body("Faturas geradas com sucesso para o mês.");
     }
 
     @GetMapping
-    public ResponseEntity<List<ListarFaturaProjection>> listarFaturas() {
-        List<ListarFaturaProjection> faturas = listarFaturasUseCase.listarFaturas();
+    public ResponseEntity<List<FaturaProjection>> listarFaturas() {
+        List<FaturaProjection> faturas = listarFaturasUseCase.executar();
         return ResponseEntity.status(HttpStatus.OK).body(faturas);
     }
 }

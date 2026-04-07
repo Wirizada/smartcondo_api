@@ -1,10 +1,10 @@
 package br.com.wirizada.smartcondo_api.faturamento.application;
 
+import br.com.wirizada.smartcondo_api.condominio.application.gateways.ApartamentoGateway;
 import br.com.wirizada.smartcondo_api.condominio.domain.Apartamento;
-import br.com.wirizada.smartcondo_api.condominio.infrastructure.ApartamentoRepository;
+import br.com.wirizada.smartcondo_api.faturamento.application.gateways.FaturaGateway;
 import br.com.wirizada.smartcondo_api.faturamento.domain.Fatura;
 import br.com.wirizada.smartcondo_api.faturamento.domain.StatusFatura;
-import br.com.wirizada.smartcondo_api.faturamento.infrastructure.FaturaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,20 +14,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GerarFaturasMensaisUseCase {
+public class GerarFaturaMensalUseCase {
 
-    private final ApartamentoRepository apartamentoRepository;
-    private final FaturaRepository faturaRepository;
+    private final ApartamentoGateway apartamentoGateway;
+    private final FaturaGateway faturaGateway;
 
-    public GerarFaturasMensaisUseCase(ApartamentoRepository apartamentoRepository, FaturaRepository faturaRepository) {
-        this.apartamentoRepository = apartamentoRepository;
-        this.faturaRepository = faturaRepository;
+    public GerarFaturaMensalUseCase(ApartamentoGateway apartamentoGateway, FaturaGateway faturaGateway) {
+        this.apartamentoGateway = apartamentoGateway;
+        this.faturaGateway = faturaGateway;
     }
 
     @Transactional
-    public void gerarFaturas(BigDecimal valorBase, LocalDate dataVencimento){
+    public void executar(BigDecimal valorBase, LocalDate dataVencimento){
 
-        List<Apartamento> apartamentos = apartamentoRepository.findAll();
+        List<Apartamento> apartamentos = apartamentoGateway.buscarTodosApartamentos();
         List<Fatura> novasFaturas = new ArrayList<>();
 
         for (Apartamento apartamento : apartamentos) {
@@ -41,7 +41,7 @@ public class GerarFaturasMensaisUseCase {
             novasFaturas.add(fatura);
         }
 
-        faturaRepository.saveAll(novasFaturas);
+        faturaGateway.salvarTodasFaturas(novasFaturas);
     }
 
 }
