@@ -16,6 +16,8 @@ import java.time.Instant;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String URN_PREFIX = "urn:smartcondo:error:";
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ProblemDetail> handleMethodArgumentNotValid(
             MethodArgumentNotValidException exception,
@@ -23,7 +25,7 @@ public class GlobalExceptionHandler {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Erro de validação nos dados da requisição");
         problemDetail.setTitle("Parâmetros inválidos");
-        problemDetail.setType(URI.create("https://api.smartcondo.com/errors/bad-request"));
+        problemDetail.setType(URI.create(URN_PREFIX + "invalid-request"));
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
@@ -41,7 +43,7 @@ public class GlobalExceptionHandler {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
         problemDetail.setTitle("Entidade não encontrada");
-        problemDetail.setType(URI.create("https://api.smartcondo.com/errors/entity-not-found"));
+        problemDetail.setType(URI.create(URN_PREFIX + "entity-not-found"));
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
@@ -55,7 +57,7 @@ public class GlobalExceptionHandler {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_CONTENT, exception.getMessage());
         problemDetail.setTitle("Regra de negócio violada");
-        problemDetail.setType(URI.create("https://api.smartcondo.com/errors/business-rule"));
+        problemDetail.setType(URI.create(URN_PREFIX + "business-rule"));
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
@@ -69,7 +71,7 @@ public class GlobalExceptionHandler {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, exception.getMessage());
         problemDetail.setTitle("Estado inválido");
-        problemDetail.setType(URI.create("https://api.smartcondo.com/errors/illegal-state"));
+        problemDetail.setType(URI.create(URN_PREFIX + "illegal-state"));
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
@@ -85,7 +87,7 @@ public class GlobalExceptionHandler {
 
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro interno inesperado");
         problemDetail.setTitle("Erro interno");
-        problemDetail.setType(URI.create("https://api.smartcondo.com/errors/internal-error"));
+        problemDetail.setType(URI.create(URN_PREFIX + "internal-error"));
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
