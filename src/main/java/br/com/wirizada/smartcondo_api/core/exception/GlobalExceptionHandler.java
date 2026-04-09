@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(EntidadeNaoEncontradaException.class)
-    public ProblemDetail handleEntidadeNaoEncontrada(
+    public ResponseEntity<ProblemDetail> handleEntidadeNaoEncontrada(
             EntidadeNaoEncontradaException exception,
             HttpServletRequest request) {
 
@@ -45,11 +45,11 @@ public class GlobalExceptionHandler {
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
-        return problemDetail;
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
     }
 
     @ExceptionHandler(RegraDeNegocioException.class)
-    public ProblemDetail handleRegraDeNegocioException(
+    public ResponseEntity<ProblemDetail> handleRegraDeNegocioException(
             RegraDeNegocioException exception,
             HttpServletRequest request) {
 
@@ -59,11 +59,11 @@ public class GlobalExceptionHandler {
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
-        return problemDetail;
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_CONTENT).body(problemDetail);
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ProblemDetail handleIllegalStateException(
+    public ResponseEntity<ProblemDetail> handleIllegalStateException(
             IllegalStateException exception,
             HttpServletRequest request) {
 
@@ -73,7 +73,7 @@ public class GlobalExceptionHandler {
         problemDetail.setInstance(URI.create(request.getRequestURI()));
         problemDetail.setProperty("timestamp", Instant.now());
 
-        return problemDetail;
+        return ResponseEntity.badRequest().body(problemDetail);
     }
 
     @ExceptionHandler(Exception.class)
